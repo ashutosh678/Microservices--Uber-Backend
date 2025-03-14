@@ -12,6 +12,7 @@ connect();
 
 // for cookie parser
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieParser());
 
 app.use("/", userRoutes);

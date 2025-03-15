@@ -1,23 +1,19 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
-const userRoutes = require("./routes/user.routes");
-const cookieParser = require("cookie-parser");
+const app = express();
 const connect = require("./db/db");
+connect();
+const cookieParser = require("cookie-parser");
+const rideRoutes = require("./routes/ride.routes");
 const rabbitMQ = require("./service/rabbit.service");
 
 rabbitMQ.connect();
 
-const app = express();
-
-// To connect db
-connect();
-
-// for cookie parser
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/", userRoutes);
+app.use("/", rideRoutes);
 
 module.exports = app;
